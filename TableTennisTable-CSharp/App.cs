@@ -65,7 +65,7 @@ namespace TableTennisTable_CSharp
                     string playersString = command.Substring("forfeit".Length);
                     string[] players = playersString.Split(' ');
                     string challenger = players[0];
-                    string challengee = players[0];
+                    string challengee = players[1];
                     _league.Forfeit(challengee, challenger);
                 }
 
