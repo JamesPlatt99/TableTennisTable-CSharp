@@ -103,14 +103,14 @@ namespace TableTennisTable_Tests
         }
 
         [TestCategory("AddPlayer"), TestCategory("Forfeit"), TestMethod]
-        public void TestChallengeNotOneRowBelow()
+        public void TestForfeitNotOneRowBelow()
         {
             league.AddPlayer("Boris");
             league.AddPlayer("Manuel");
             league.AddPlayer("Pete");
             league.AddPlayer("Carlos");
-            Assert.ThrowsException<System.ArgumentException>(()=>league.Forfeit("Boris", "Manuel"));
-            Assert.ThrowsException<System.ArgumentException>(()=>league.Forfeit("Carlos", "Boris"));
+            Assert.ThrowsException<System.ArgumentException>(()=>league.Forfeit("Manuel", "Boris"));
+            Assert.ThrowsException<System.ArgumentException>(()=>league.Forfeit("Boris", "Carlos"));
         }
 
         [TestCategory("RecordWin"), TestCategory("GetRows"), TestCategory("AddPlayer"), TestMethod]
@@ -165,12 +165,26 @@ namespace TableTennisTable_Tests
             league.Forfeit("Steve", "Carlos");
             league.Forfeit("Steve", "Carlos");
 
-            league.RecordWin("Carlos", "Boris");
+            league.RecordWin("Steve", "Boris");
 
             league.Forfeit("Steve", "Manuel");
 
             string winner = league.GetWinner();
             Assert.AreEqual("Steve", winner);
+        }
+
+        [TestCategory("AddPlayer"), TestCategory("Forfeit"), TestMethod]
+        public void TestForfeitChallengerDoesNotExist()
+        {
+            league.AddPlayer("Boris");
+            Assert.ThrowsException<System.ArgumentException>(() => league.Forfeit("Boris", "Steve"));
+        }
+
+        [TestCategory("AddPlayer"), TestCategory("Forfeit"), TestMethod]
+        public void TestForfeitChallengeeDoesNotExist()
+        {
+            league.AddPlayer("Steve");
+            Assert.ThrowsException<System.ArgumentException>(() => league.Forfeit("Boris", "Steve"));
         }
     }
 }

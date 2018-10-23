@@ -8,6 +8,7 @@ namespace TableTennisTable_CSharp
     public class League
     {
         private List<LeagueRow> _rows;
+        private Dictionary<string, int> _forfeitCount = new Dictionary<string, int>();
 
         public League() : this(new List<LeagueRow>())
         {
@@ -22,7 +23,21 @@ namespace TableTennisTable_CSharp
 
         public void Forfeit(string challengee, string challenger)
         {
-            throw new NotImplementedException();
+            CheckPlayerIsInGame(challengee);
+            CheckPlayerIsInGame(challenger);
+
+            int chalengeeRowIndex = FindPlayerRowIndex(challengee);
+            int challengerRowIndex = FindPlayerRowIndex(challenger);
+
+            if (challengerRowIndex - chalengeeRowIndex != 1)
+            {
+                throw new ArgumentException($"Player {challengee} cannot forfeit to player {challenger} as they are lower ranked");
+            }
+            int forfeitCount = IncrementForfeitCount(challengee);
+            if(forfeitCount == 3)
+            {
+                RecordWin(challenger, challengee);
+            }
         }
 
         public void AddPlayer(string player)
@@ -58,6 +73,8 @@ namespace TableTennisTable_CSharp
 
             _rows[winnerRowIndex].Swap(winner, loser);
             _rows[loserRowIndex].Swap(loser, winner);
+            ResetForfeitCount(loser);
+            ResetForfeitCount(winner);
         }
 
         public string GetWinner()
@@ -68,6 +85,33 @@ namespace TableTennisTable_CSharp
             }
 
             return null;
+        }
+
+        private int IncrementForfeitCount(string player)
+        {
+            if (!_forfeitCount.ContainsKey(player))
+            {
+                _forfeitCount.Add(player, 0);
+            }
+            _forfeitCount[player]++;
+            return _forfeitCount[player];
+        }
+
+        private void ResetForfeitCount(string player)
+        {
+            if (!_forfeitCount.ContainsKey(player))
+            {
+                _forfeitCount.Add(player, 0);
+            }
+            _forfeitCount[player] = 0;
+        }
+
+        private bool Player1OneRankBelowPlayer2(string player1, string player2)
+        {
+            int player1RowIndex = FindPlayerRowIndex(player1);
+            int player2RowIndex = FindPlayerRowIndex(player2);
+
+            return player2RowIndex - player1RowIndex == 1;
         }
 
         private bool AreAllRowsFull()
