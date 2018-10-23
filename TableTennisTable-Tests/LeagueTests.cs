@@ -155,6 +155,24 @@ namespace TableTennisTable_Tests
         }
 
         [TestCategory("AddPlayer"), TestCategory("Forfeit"), TestMethod]
+        public void TestForfeitStreakRetained()
+        {
+            league.AddPlayer("Boris");
+            league.AddPlayer("Manuel");
+            league.AddPlayer("Peter");
+            league.AddPlayer("Rob");
+
+            league.Forfeit("Boris", "Manuel");
+            league.Forfeit("Boris", "Manuel");
+            league.Forfeit("Boris", "Manuel");
+            league.Forfeit("Boris", "Rob");
+
+            var rows = league.GetRows();
+            Assert.IsTrue(rows[2].GetPlayers().Contains("Boris"));
+        }
+
+
+        [TestCategory("AddPlayer"), TestCategory("Forfeit"), TestMethod]
         public void TestForfeitResets()
         {
             league.AddPlayer("Boris");

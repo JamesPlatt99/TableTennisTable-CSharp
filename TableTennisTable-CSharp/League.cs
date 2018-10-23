@@ -26,17 +26,14 @@ namespace TableTennisTable_CSharp
             CheckPlayerIsInGame(challengee);
             CheckPlayerIsInGame(challenger);
 
-            int chalengeeRowIndex = FindPlayerRowIndex(challengee);
-            int challengerRowIndex = FindPlayerRowIndex(challenger);
-
-            if (challengerRowIndex - chalengeeRowIndex != 1)
+            if (!Player1OneRankBelowPlayer2(challenger, challengee))
             {
                 throw new ArgumentException($"Player {challengee} cannot forfeit to player {challenger} as they are lower ranked");
             }
             int forfeitCount = IncrementForfeitCount(challengee);
-            if(forfeitCount == 3)
-            {
-                RecordWin(challenger, challengee);
+            if(forfeitCount >= 3)
+            {            
+                SwapPlayer1AndPlayer2(challenger, challengee);
             }
         }
 
@@ -62,17 +59,12 @@ namespace TableTennisTable_CSharp
         {
             CheckPlayerIsInGame(winner);
             CheckPlayerIsInGame(loser);
-
-            int winnerRowIndex = FindPlayerRowIndex(winner);
-            int loserRowIndex = FindPlayerRowIndex(loser);
-
-            if (winnerRowIndex - loserRowIndex != 1)
+            if (!Player1OneRankBelowPlayer2(winner, loser))
             {
                 throw new ArgumentException($"Cannot record match result. Winner {winner} must be one row below loser {loser}");
             }
 
-            _rows[winnerRowIndex].Swap(winner, loser);
-            _rows[loserRowIndex].Swap(loser, winner);
+            SwapPlayer1AndPlayer2(winner, loser);
             ResetForfeitCount(loser);
             ResetForfeitCount(winner);
         }
@@ -85,6 +77,22 @@ namespace TableTennisTable_CSharp
             }
 
             return null;
+        }
+
+        private bool Player1OneRankBelowPlayer2(string player1, string player2)
+        {
+            int player1RowIndex = FindPlayerRowIndex(player1);
+            int player2RowIndex = FindPlayerRowIndex(player2);
+            return (player1RowIndex - player2RowIndex == 1);
+        }
+
+        private void SwapPlayer1AndPlayer2(string player1, string player2)
+        {
+            int player1RowIndex = FindPlayerRowIndex(player1);
+            int player2RowIndex = FindPlayerRowIndex(player2);
+
+            _rows[player1RowIndex].Swap(player1, player2);
+            _rows[player2RowIndex].Swap(player2, player1);
         }
 
         private int IncrementForfeitCount(string player)
@@ -104,14 +112,6 @@ namespace TableTennisTable_CSharp
                 _forfeitCount.Add(player, 0);
             }
             _forfeitCount[player] = 0;
-        }
-
-        private bool Player1OneRankBelowPlayer2(string player1, string player2)
-        {
-            int player1RowIndex = FindPlayerRowIndex(player1);
-            int player2RowIndex = FindPlayerRowIndex(player2);
-
-            return player2RowIndex - player1RowIndex == 1;
         }
 
         private bool AreAllRowsFull()
