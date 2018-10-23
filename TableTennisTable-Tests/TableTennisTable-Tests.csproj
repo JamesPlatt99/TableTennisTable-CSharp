@@ -75,6 +75,7 @@
     </Compile>
     <Compile Include="GameSteps.cs" />
     <Compile Include="IntegrationTests.cs" />
+    <Compile Include="LeagueRendererTests.cs" />
     <Compile Include="LeagueTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
