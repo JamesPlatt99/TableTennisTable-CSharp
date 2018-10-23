@@ -20,6 +20,11 @@ namespace TableTennisTable_CSharp
 
         private Regex _validNameRegex = new Regex("^\\w+$");
 
+        public void Forfeit(string challengee, string challenger)
+        {
+            throw new NotImplementedException();
+        }
+
         public void AddPlayer(string player)
         {
             ValidateName(player);

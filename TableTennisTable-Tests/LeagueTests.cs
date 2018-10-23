@@ -101,5 +101,76 @@ namespace TableTennisTable_Tests
             league.AddPlayer("Charlie");
             Assert.ThrowsException<System.ArgumentException>(() => league.RecordWin("Charlie", "Boris"));
         }
+
+        [TestCategory("AddPlayer"), TestCategory("Forfeit"), TestMethod]
+        public void TestChallengeNotOneRowBelow()
+        {
+            league.AddPlayer("Boris");
+            league.AddPlayer("Manuel");
+            league.AddPlayer("Pete");
+            league.AddPlayer("Carlos");
+            Assert.ThrowsException<System.ArgumentException>(()=>league.Forfeit("Boris", "Manuel"));
+            Assert.ThrowsException<System.ArgumentException>(()=>league.Forfeit("Carlos", "Boris"));
+        }
+
+        [TestCategory("RecordWin"), TestCategory("GetRows"), TestCategory("AddPlayer"), TestMethod]
+        public void TestRecordWinWinnerDoesNotExist()
+        {
+            league.AddPlayer("Boris");
+            Assert.ThrowsException<System.ArgumentException>(() => league.RecordWin("Charlie", "Boris"));
+        }
+
+        [TestCategory("RecordWin"), TestCategory("GetRows"), TestCategory("AddPlayer"), TestMethod]
+        public void TestRecordWinLoserDoesNotExist()
+        {
+            league.AddPlayer("Charlie");
+            Assert.ThrowsException<System.ArgumentException>(() => league.RecordWin("Charlie", "Boris"));
+        }
+
+        [TestCategory("AddPlayer"), TestCategory("Forfeit"), TestMethod]
+        public void TestForfeitSwitchesPlaces()
+        {
+            league.AddPlayer("Boris");
+            league.AddPlayer("Manuel");
+
+            league.Forfeit("Boris", "Manuel");
+            league.Forfeit("Boris", "Manuel");
+            league.Forfeit("Boris", "Manuel");
+
+            string winner = league.GetWinner();
+            Assert.AreEqual("Manuel", winner);
+        }
+
+        [TestCategory("AddPlayer"), TestCategory("Forfeit"), TestMethod]
+        public void TestForfeitDoesNotSwitchPlacesBefore3()
+        {
+            league.AddPlayer("Boris");
+            league.AddPlayer("Manuel");
+
+            league.Forfeit("Boris", "Manuel");
+            league.Forfeit("Boris", "Manuel");
+
+            string winner = league.GetWinner();
+            Assert.AreEqual("Boris", winner);
+        }
+
+        [TestCategory("AddPlayer"), TestCategory("Forfeit"), TestMethod]
+        public void TestForfeitResets()
+        {
+            league.AddPlayer("Boris");
+            league.AddPlayer("Manuel");
+            league.AddPlayer("Steve");
+            league.AddPlayer("Carlos");
+
+            league.Forfeit("Steve", "Carlos");
+            league.Forfeit("Steve", "Carlos");
+
+            league.RecordWin("Carlos", "Boris");
+
+            league.Forfeit("Steve", "Manuel");
+
+            string winner = league.GetWinner();
+            Assert.AreEqual("Steve", winner);
+        }
     }
 }

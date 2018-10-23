@@ -60,6 +60,15 @@ namespace TableTennisTable_CSharp
                     return $"Loaded {name}";
                 }
 
+                if (command.StartsWith("forfeit"))
+                {
+                    string playersString = command.Substring("forfeit".Length);
+                    string[] players = playersString.Split(' ');
+                    string challenger = players[0];
+                    string challengee = players[0];
+                    _league.Forfeit(challengee, challenger);
+                }
+
                 return $"Unknown command: {command}";
             }
             catch (ArgumentException e)
