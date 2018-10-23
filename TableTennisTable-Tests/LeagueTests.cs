@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TableTennisTable_CSharp;
 
@@ -7,12 +8,17 @@ namespace TableTennisTable_Tests
     [TestClass]
     public class LeagueTests
     {
-        [TestMethod]
+        League league;
+
+        [TestInitialize]
+        public void Initilize()
+        {
+            league = new League();
+        }
+
+        [TestCategory("AddPlayer"), TestCategory("GetRows"), TestMethod]
         public void TestAddPlayer()
         {
-            // Given
-            League league = new League();
-
             // When
             league.AddPlayer("Bob");
 
@@ -22,6 +28,78 @@ namespace TableTennisTable_Tests
             var firstRowPlayers = rows.First().GetPlayers();
             Assert.AreEqual(1, firstRowPlayers.Count);
             CollectionAssert.Contains(firstRowPlayers, "Bob");
+        }
+
+        [TestCategory("AddPlayer"), TestMethod]
+        public void TestAddDuplicatePlayer()
+        {
+            league.AddPlayer("Bob");
+            Assert.ThrowsException<System.ArgumentException>(() => league.AddPlayer("Bob"));
+        }
+
+        [TestCategory("AddPlayer"), TestMethod]
+        public void TestAddInvalidPlayerName()
+        {
+            Assert.ThrowsException<System.ArgumentException>(() => league.AddPlayer("Bob "));
+        }
+
+        [TestCategory("AddPlayer"), TestCategory("GetRows"), TestMethod]
+        public void TestNewRowCreated()
+        {
+            league.AddPlayer("Bob");
+            int numRows = league.GetRows().Count();
+            Assert.AreEqual(1, numRows);
+
+            league.AddPlayer("Steve");
+            numRows = league.GetRows().Count();
+            Assert.AreEqual(2, numRows);
+
+            league.AddPlayer("John");
+            numRows = league.GetRows().Count();
+            Assert.AreEqual(2, numRows);
+
+            league.AddPlayer("Carlos");
+            numRows = league.GetRows().Count();
+            Assert.AreEqual(3, numRows);
+        }
+
+        [TestCategory("AddPlayer"), TestCategory("GetRows"), TestMethod]
+        public void TestPlayerIsAddedToLastRow()
+        {
+            league.AddPlayer("Bob");
+            league.AddPlayer("Marcus");
+            List<LeagueRow> rows = league.GetRows();
+            Assert.IsTrue(rows.Last().GetPlayers().Contains("Marcus"));
+        }
+
+        [TestCategory("GetWinner"), TestCategory("AddPlayer"), TestMethod]
+        public void TestGetWinner()
+        {
+            league.AddPlayer("Boris");
+            league.AddPlayer("Manuel");
+            league.AddPlayer("Stanley");
+            league.AddPlayer("Samuel");
+            Assert.AreEqual("Boris", league.GetWinner());
+        }
+
+        [TestCategory("RecordWin"), TestCategory("GetRows"), TestCategory("AddPlayer"), TestCategory("GetWinner"), TestMethod]
+        public void TestRecordWinSwapPlaces()
+        {
+            league.AddPlayer("Boris");
+            league.AddPlayer("Manuel");
+            league.RecordWin("Manuel", "Boris");
+            string winner = league.GetWinner();
+            Assert.AreEqual("Manuel", winner);
+        }
+
+        [TestCategory("RecordWin"), TestCategory("GetRows"), TestCategory("AddPlayer"), TestMethod]
+        public void TestPlayersTooFarApartError()
+        {
+            league.AddPlayer("Boris");
+            league.AddPlayer("Manuel");
+            league.AddPlayer("Peter");
+            league.AddPlayer("Charlie");
+            Assert.ThrowsException<System.ArgumentException>(() => league.RecordWin("Charlie", "Boris"));
         }
     }
 }
