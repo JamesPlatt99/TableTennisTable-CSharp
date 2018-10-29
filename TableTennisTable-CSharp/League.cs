@@ -5,7 +5,16 @@ using System.Text.RegularExpressions;
 
 namespace TableTennisTable_CSharp
 {
-    public class League
+    public interface ILeague
+    {
+        void Forfeit(string challengee, string challenger);
+        void AddPlayer(string player);
+        List<LeagueRow> GetRows();
+        void RecordWin(string winner, string loser);
+        string GetWinner();
+    }
+
+    public class League : ILeague
     {
         private List<LeagueRow> _rows;
         private Dictionary<string, int> _forfeitCount = new Dictionary<string, int>();

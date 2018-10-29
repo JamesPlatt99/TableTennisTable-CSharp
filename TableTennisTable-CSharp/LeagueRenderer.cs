@@ -4,7 +4,7 @@ namespace TableTennisTable_CSharp
 {
     public interface ILeagueRenderer
     {
-        string Render(League league);
+        string Render(ILeague league);
     }
 
     public class LeagueRenderer : ILeagueRenderer
@@ -14,7 +14,7 @@ namespace TableTennisTable_CSharp
         private static readonly string Boundary = new string('-', BoxWidth);
         private static readonly string EmptyName = $"|{new string(' ', MaxNameLength)}|";
 
-        public string Render(League league)
+        public string Render(ILeague league)
         {
             var rows = league.GetRows();
 

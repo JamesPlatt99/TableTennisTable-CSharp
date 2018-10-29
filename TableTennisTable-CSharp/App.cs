@@ -4,11 +4,11 @@ namespace TableTennisTable_CSharp
 {
     public class App
     {
-        private League _league;
+        private ILeague _league;
         private ILeagueRenderer _leagueRenderer;
         private IFileService _fileService;
 
-        public App(League initialLeague, ILeagueRenderer leagueRenderer, IFileService fileService)
+        public App(ILeague initialLeague, ILeagueRenderer leagueRenderer, IFileService fileService)
         {
             _league = initialLeague;
             _leagueRenderer = leagueRenderer;
@@ -62,11 +62,12 @@ namespace TableTennisTable_CSharp
 
                 if (command.StartsWith("forfeit"))
                 {
-                    string playersString = command.Substring("forfeit".Length);
+                    string playersString = command.Substring("forfeit ".Length);
                     string[] players = playersString.Split(' ');
                     string challenger = players[0];
                     string challengee = players[1];
                     _league.Forfeit(challengee, challenger);
+                    return $"Player {challengee} forfeited to {challenger}";
                 }
 
                 return $"Unknown command: {command}";

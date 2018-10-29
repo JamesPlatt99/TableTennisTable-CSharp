@@ -6,7 +6,7 @@ namespace TableTennisTable_CSharp
 {
     public interface IFileService
     {
-        void Save(string path, League league);
+        void Save(string path, ILeague league);
         League Load(string path);
     }
 
@@ -16,7 +16,7 @@ namespace TableTennisTable_CSharp
         {
             try
             {
-                return new League(File.ReadLines(path).Select(deserialiseRow).ToList());
+                return new League(File.ReadLines(path).Select(DeserialiseRow).ToList());
             }
             catch (IOException e)
             {
@@ -28,7 +28,7 @@ namespace TableTennisTable_CSharp
             }
         }
 
-        private LeagueRow deserialiseRow(string line, int index)
+        private LeagueRow DeserialiseRow(string line, int index)
         {
             LeagueRow row = new LeagueRow(index + 1);
             foreach (var player in line.Split(','))
@@ -38,7 +38,7 @@ namespace TableTennisTable_CSharp
             return row;
         }
 
-        public void Save(string path, League league)
+        public void Save(string path, ILeague league)
         {
             try
             {
