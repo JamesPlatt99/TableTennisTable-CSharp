@@ -42,7 +42,7 @@ namespace TableTennisTable_CSharp
         {
             try
             {
-                File.WriteAllLines(path, league.GetRows().Select(serialiseRow));
+                File.WriteAllLines(path, league.GetRows().Select(SerialiseRow));
             }
             catch (IOException e)
             {
@@ -50,7 +50,7 @@ namespace TableTennisTable_CSharp
             }
         }
 
-        private string serialiseRow(LeagueRow row)
+        private string SerialiseRow(LeagueRow row)
         {
             return string.Join(",", row.GetPlayers());
         }
