@@ -98,7 +98,7 @@ namespace TableTennisTable_CSharp
 
         public string GenerateAutoSaveName()
         {
-            string filename = string.Format("saved_games/autosave_{0:ddMMyy_HHmmss}", DateTime.Now);
+            string filename = string.Format("autosave_{0:ddMMyy_HHmmss}", DateTime.Now);
             filename = IncrementFileNameIfTaken(filename);
             return filename;
         }
