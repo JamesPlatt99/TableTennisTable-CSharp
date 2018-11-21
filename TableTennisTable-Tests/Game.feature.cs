@@ -94,14 +94,128 @@ namespace TableTennisTable_Tests
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Empty League", null, ((string[])(null)));
 #line 3
-    this.ScenarioInitialize(scenarioInfo);
+ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 4
-     testRunner.Given("the league has no players", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+  testRunner.Given("the league has no players", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 5
-     testRunner.When("I print the league", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+  testRunner.When("I print the league", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 6
-     testRunner.Then("I should see \"No players yet\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+  testRunner.Then("I should see \"No players yet\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Adding a player")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Game")]
+        public virtual void AddingAPlayer()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding a player", null, ((string[])(null)));
+#line 8
+ this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 9
+  testRunner.Given("the league has no players", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 10
+  testRunner.When("I add the player \"Barry\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 11
+  testRunner.Then("I should see \"Added player Barry\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("PlayerWinsGame")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Game")]
+        public virtual void PlayerWinsGame()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("PlayerWinsGame", null, ((string[])(null)));
+#line 13
+ this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 14
+  testRunner.Given("the league has the players \"Barry, Steve\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 15
+  testRunner.When("I record \"Steve\" won against \"Barry\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 16
+  testRunner.Then("Then the winner should be \"Steve\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("PlayerForfeitsGameOnce")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Game")]
+        public virtual void PlayerForfeitsGameOnce()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("PlayerForfeitsGameOnce", null, ((string[])(null)));
+#line 18
+ this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 19
+  testRunner.Given("the league has the players \"Barry, Steve\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 20
+  testRunner.When("Player \"Barry\" forfeits to \"Steve\" \"1\" times", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 21
+  testRunner.Then("Then the winner should be \"Barry\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("PlayerForfeitsGameThreeTimes")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Game")]
+        public virtual void PlayerForfeitsGameThreeTimes()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("PlayerForfeitsGameThreeTimes", null, ((string[])(null)));
+#line 23
+ this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 24
+  testRunner.Given("the league has the players \"Barry, Steve\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 25
+  testRunner.When("Player \"Barry\" forfeits to \"Steve\" \"3\" times", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 26
+  testRunner.Then("Then the winner should be \"Steve\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("SaveGame")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Game")]
+        public virtual void SaveGame()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("SaveGame", null, ((string[])(null)));
+#line 28
+ this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 29
+  testRunner.Given("the league has the players \"Carlos, Pete, Manuel\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 30
+  testRunner.When("The game is saved with the name \"TestSaveGame123\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 31
+  testRunner.Then("Then the file \"TestSaveGame123\" should exist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("LoadGame")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Game")]
+        public virtual void LoadGame()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("LoadGame", null, ((string[])(null)));
+#line 33
+ this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 34
+  testRunner.Given("There is a save game named \"TestSaveGame1234\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 35
+  testRunner.When("The game is loaded with the name \"TestSaveGame1234\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 36
+  testRunner.Then("I should see \"Loaded TestSaveGame1234\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
